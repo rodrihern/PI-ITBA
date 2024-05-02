@@ -3,7 +3,7 @@
 #include "../getnum.h"
 #include "../rand.h"
 #define X 5
-#define DIGITOS 10
+#define DIGITOS 9
 #define MIN_INTENTOS 2
 #define SWAP(x, y) int a = x; x = y; y = a;
 
@@ -56,7 +56,7 @@ int main() {
 }
 
 void generaAleatorio(int incognita[]) {
-    int digito[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int digito[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     randomize();
 
     for(int i = 0; i < X; i++) {
@@ -78,7 +78,7 @@ int elegirNivel() {
 void leerNumero(int numero[]) {
     
     int esValido = 1;
-    int anteriores[] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int anteriores[DIGITOS+1] = {0};
     
     do {
         if(!esValido) {
@@ -97,7 +97,7 @@ void leerNumero(int numero[]) {
             if(digito == anteriores[digito]) {
                 aux = 0; //para que corte
                 esValido = 0;
-                puts("habia uno repetido");
+                puts("habia uno repetido o 0");
             }
             else {
                 anteriores[digito] = digito;
@@ -141,7 +141,7 @@ int cantidadBien(int incognita[], int numero[]) {
 }
 
 int cantidadRegular(int incognita[], int numero[]) {
-    int digEnInc[] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int digEnInc[DIGITOS+1] = {0};
     int cantRegular = 0;
 
     for(int i = 0; i < X; i++) {
