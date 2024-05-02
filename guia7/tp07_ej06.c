@@ -4,7 +4,7 @@
 #include "../rand.h"
 #define X 5
 #define DIGITOS 9
-#define MIN_INTENTOS 2
+#define MIN_INTENTOS 5
 #define SWAP(x, y) int a = x; x = y; y = a;
 
 // deja en v un arreglo de cant digitos no repetidos
@@ -33,7 +33,7 @@ int main() {
     intentos = MIN_INTENTOS + 10 - nivel;
 
     for(int i = 0; i < intentos && !gano; i++) {
-        printf("\n\nTienes %d intentos\n", intentos-i);
+        printf("\n\nTienes %d intento%s\n", intentos-i, (intentos-i == 1) ? "" : "s");
         leerNumero(numero);
 
         if(coincideNumero(incognita, numero)) {
@@ -56,7 +56,7 @@ int main() {
 }
 
 void generaAleatorio(int incognita[]) {
-    int digito[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    char digito[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     randomize();
 
     for(int i = 0; i < X; i++) {
@@ -78,26 +78,25 @@ int elegirNivel() {
 void leerNumero(int numero[]) {
     
     int esValido = 1;
-    int anteriores[DIGITOS+1] = {0};
+    char anteriores[DIGITOS+1] = {0};
     
     do {
         if(!esValido) {
             puts("incorrecto, vuelva a intentarlo.");
-            anteriores[0] = 1;
-            for(int j = 1; j < DIGITOS; j++) {
+            for(int j = 0; j <= DIGITOS; j++) {
                 anteriores[j] = 0;
             }
         }
         esValido = 1;
-        int num = getint("ingrese un numero de %d digitos no repetidos: ", X);
-        int aux = num, i;
+        int num = getint("ingrese un numero de %d digitos no repetidos distintos de 0: ", X);
+        int aux = num;
+        int i;
 
         for(i = X-1; aux && i >= 0; i--) {
             int digito = aux % 10;
             if(digito == anteriores[digito]) {
                 aux = 0; //para que corte
                 esValido = 0;
-                puts("habia uno repetido o 0");
             }
             else {
                 anteriores[digito] = digito;
@@ -120,10 +119,7 @@ int coincideNumero(int incognita[], int numero[]) {
         return 1;
     }
 
-    int regular;
-    
-    
-    regular = cantidadRegular(incognita, numero);
+    int regular = cantidadRegular(incognita, numero);
     printf("Hay %d bien y %d regular", bien , regular); 
 
     return 0;
@@ -141,7 +137,7 @@ int cantidadBien(int incognita[], int numero[]) {
 }
 
 int cantidadRegular(int incognita[], int numero[]) {
-    int digEnInc[DIGITOS+1] = {0};
+    char digEnInc[DIGITOS+1] = {0};
     int cantRegular = 0;
 
     for(int i = 0; i < X; i++) {
