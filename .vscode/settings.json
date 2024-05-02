@@ -3,6 +3,8 @@
         "stdbool.h": "c",
         "time.h": "c",
         "cmath": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "rand.h": "c",
+        "stdlib.h": "c"
     }
 }
