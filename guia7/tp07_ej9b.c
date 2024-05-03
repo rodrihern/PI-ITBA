@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../rand.h"
+#include "../getnum.h"
 #define BOLILLAS 90
 #define ROWS 3
 #define COLS 5
@@ -8,10 +9,11 @@
 
 typedef int tipoLinea[COLS];
 typedef tipoLinea tipoCarton[ROWS];
+
 // genera 15 numeros aleatorios no ordenados y los deja en la matriz carton
 void generarCarton(tipoCarton carton);
 // la funcion en la que se juega al bingo
-int jugar(int bolillero[], tipoCarton jugador1, tipoCarton jugador2);
+void jugar(int bolillero[], tipoCarton jugador[], int jugadores);
 // Devuelve un numero de bolilla que todavia no salio y actualiza el bolillero
 int sacarBolilla(int bolillero[], int * cantBolillas);
 // Dado un carton y una bolilla verifica si pertenece al mismo y la marca (devuelve la cantidad de lineas completas o -1 si el carton no se actualizo)
@@ -22,38 +24,42 @@ void imprimirCarton(tipoCarton carton);
 int buscarBolilla(tipoCarton carton, int bolilla);
 // Devuelve 1 si la linea esta completa (todos los numeros ya marcados)
 int controlarLineas(tipoLinea linea);
+//solicita la cantidad de jugadores
+int leerJugadores();
 
 
 int main() {
     // para una constante simnolica voy a hacer un array de cartones
-    tipoCarton jugador1, jugador2;
-    int ganador, bolillero[BOLILLAS];
+    printf("\t\tBIENVENIDO AL SIMULADOR DEL BINGO\n");
+    int jugadores = leerJugadores();
+    int bolillero[BOLILLAS];
+
+    /*
+    ACA VA EL MALLOC PARA EL ARRAY DE JUGADORES
+    */
+   tipoCarton * jugador;
+   jugador = malloc(jugadores * ROWS * COLS * sizeof(int));
 
     for(int i = 0; i < BOLILLAS; i++) {
         bolillero[i] = i + 1;
     }
-
     randomize();
-    generarCarton(jugador1);
-    generarCarton(jugador2);
+    //for para generar cartones
+    for(int i = 0; i < jugadores; i++) {
+        generarCarton(jugador[i]);
+    }
+    
 
     puts("Cartones iniciales:");
-    puts("Jugador1:");
-    imprimirCarton(jugador1);
 
-    puts("\nJugador2:");
-    imprimirCarton(jugador2);
-
-    ganador = jugar(bolillero, jugador1, jugador2);
-
-    
-    if(ganador) {
-        printf("\n\nEL GANADOR FUE EL JUGADOR %d\n", ganador);
-    }
-    else {
-        printf("\n\nWTF HUBO EMPATE\n");
+    for(int i = 0; i < jugadores; i++) {
+        printf("Jugador%d:\n", i+1);
+        imprimirCarton(jugador[i]);
     }
 
+    jugar(bolillero, jugador, jugadores);
+
+    free(jugador);
     
     return 0;
 }
@@ -76,9 +82,10 @@ void generarCarton(tipoCarton carton) {
 
 }
 
-int jugar(int bolillero[], tipoCarton jugador1, tipoCarton jugador2) {
-    int bolillasRestantes = BOLILLAS, filas1 = 0, filas2 = 0, fil;
-    int filaCompleta = 0, bingo = 0, gano = 0;
+void jugar(int bolillero[], tipoCarton jugador[], int jugadores) {
+    int bolillasRestantes = BOLILLAS, fil;
+    int filaCompleta = 0, bingo = 0;
+    int * filasCompletas = calloc(jugadores, sizeof(int));
     
     
     do {
@@ -87,57 +94,43 @@ int jugar(int bolillero[], tipoCarton jugador1, tipoCarton jugador2) {
         printf("\n\n**** Salio: %d ****\n", bolilla);
         printf("Bolillas restantes: %d\n", bolillasRestantes);
 
-        fil = controlarCarton(jugador1, bolilla);
-        if(fil > 0) {
-            filas1 = fil;
+        for(int i = 0; i < jugadores; i++) {
+            fil = controlarCarton(jugador[i], bolilla);
+            if(fil > 0) {
+                filasCompletas[i] = fil;
+            }
         }
 
-        fil = controlarCarton(jugador2, bolilla);
-        if(fil > 0) {
-            filas2 = fil;
+        for(int i = 0; i < jugadores; i++) {
+            printf("Jugador%d:\n", i+1);
+            imprimirCarton(jugador[i]);
         }
-        puts("Jugador1:");
-        imprimirCarton(jugador1);
-        puts("Jugador 2:");
-        imprimirCarton(jugador2);
 
         // para una constante simbolica aca estaria bueno una funcion para ver quien gano
         if(!filaCompleta) {
-            if(filas1 > 0 || filas2 > 0) {
-                filaCompleta = 1;
-
-                if(filas1 > 0 && filas2 > 0) {
-                    puts("\n\n\tAMBOS COMPLETARON 1 FILA\n\n");
-                }
-                else if (filas1 > 0) {
-                    puts("\n\n\tJUGADOR 1 COMPLETO UNA FILA\n\n");
-                }
-                else {
-                    puts("\n\n\tJUGADOR 2 COMPLETO UNA FILA\n\n");
+            for(int i = 0; i < jugadores; i++) {
+                if( filasCompletas[i] ) {
+                    printf("\n\t\tJUGADOR %d COMPLETO UNA FILA", i+1);
+                    filaCompleta = 1;
                 }
             }
         }
 
         // para una constante simbolica aca estaria bueno una funcion para ver quien gano
-        if(filas1 == ROWS || filas2 == ROWS) {
-            bingo = 1;
-
-            if(filas1 == ROWS && filas2 == ROWS) {
-                gano = 0;
+        if(filaCompleta) {
+            for(int i = 0; i < jugadores; i++) {
+                if(filasCompletas[i] == ROWS) {
+                    bingo = 1;
+                    printf("\n\n\t\tGANO EL JUGADOR %d\n", i+1);
+                }
             }
-            else if (filas1 == ROWS) {
-                gano = 1;
-            }
-            else {
-                gano = 2;
-            }
-
         }
         
 
     } while(!bingo);
 
-    return gano;
+    free(filasCompletas);
+
 }
 
 int sacarBolilla(int bolillero[], int * cantBolillas) {
@@ -172,7 +165,7 @@ void imprimirCarton(tipoCarton carton) {
         for(int j = 0; j < COLS; j++) {
             if(carton[i][j]) {
                 printf("%d ", carton[i][j]);
-            }   
+            }
         }
         putchar('\n');
     }
@@ -199,4 +192,13 @@ int controlarLineas(tipoLinea linea) {
     }
 
     return (sum == 0);
+}
+
+int leerJugadores() {
+    int jugadores;
+    do {
+        jugadores = getint("ingrese cantidad de jugadores [2 -> 10]: ");
+    } while(jugadores < 2 || 10 < jugadores);
+
+    return jugadores;
 }
