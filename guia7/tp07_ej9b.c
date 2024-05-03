@@ -34,11 +34,7 @@ int main() {
     int jugadores = leerJugadores();
     int bolillero[BOLILLAS];
 
-    /*
-    ACA VA EL MALLOC PARA EL ARRAY DE JUGADORES
-    */
-   tipoCarton * jugador;
-   jugador = malloc(jugadores * ROWS * COLS * sizeof(int));
+   tipoCarton * jugador = malloc(jugadores * ROWS * COLS * sizeof(int));
 
     for(int i = 0; i < BOLILLAS; i++) {
         bolillero[i] = i + 1;

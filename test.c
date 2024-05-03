@@ -1,11 +1,15 @@
 #include <stdio.h>
-#include <math.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
 
-int
-main( void ) {
-	printf("Hello world");
+
+
+int main(void) {
+	
 
 }
+
 
 
 
