@@ -6,7 +6,6 @@
 #define FUNCION(x) (sin((x)))
 #define BLOCK 5
 
-
 typedef struct {
     double min, max;
 } tipoIntervalo;
