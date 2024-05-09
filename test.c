@@ -3,13 +3,17 @@
 #include <string.h>
 #include <stdlib.h>
 
+typedef struct {
+	int documento;
+	char nombre[15];
+} persona;
 
-
-int main(void) {
+int main() {
+	persona persona2;
 	
-	//hola manola
-	return 0;
 }
+
+
 
 
 
