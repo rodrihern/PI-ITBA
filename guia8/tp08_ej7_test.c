@@ -69,9 +69,20 @@ int main(void) {
     assert(res[4].direccion==I_AR);
 
 
-    puts("\nOK !");
+    puts("\nOK primera parte");
 
-    free(res);
+    char * diccionario2[] = {""};
+    res = resolverSopa(sopa, diccionario2);
+    // La cantidad de palabras encontradas debe ser 0
+    expected = 0;
+    count = 0;
+    while ( res[count].palabra != NULL)
+        printf("%s\n", res[count++].palabra);
+        
+    assert(count == expected);
+    free(res); 
+    puts("OK sin palabras encontradas");
+
 
     return 0;
 }
