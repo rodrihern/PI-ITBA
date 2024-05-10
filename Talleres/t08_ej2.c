@@ -22,7 +22,7 @@ void igualesVoid(int v1[], int v2[], int * ans) {
 
 int main() {
     int v1[] = {1, 2, 3, -1};
-    int v2[] = {1, 2, 3, -1};
+    int v2[] = {1, 3, 3, -1};
     int ans;
 
     igualesVoid(v1, v2, &ans);
