@@ -17,7 +17,7 @@ void recMinMax(int v[], int dim, int * min, int * max) {
 
     recMinMax(v+1, dim-1, min, max);
 
-    if(*min <= 0 || *max <= 0) {
+    if(*min < 0) {
         return;
     }
 
