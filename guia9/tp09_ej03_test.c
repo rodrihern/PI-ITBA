@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-int productoEsc(int v1[], int v2[], int ans[]);
+void productoEsc(double v1[], double v2[], int dim);
 
 int main(void) {
 
@@ -20,9 +20,12 @@ int main(void) {
 	printf ("OK!\n");
 	return 0;
 }
-int productoEsc(int v1[], int v2[], int ans[]) {
+void productoEsc(double v1[], double v2[], int dim) {
 
+	if(dim == 0) {
+		return 0;
+	}
 
-	
+	return v1[0] * v2[0] + productoEsc(v1+1, v2+1, dim-1);
 }
 
