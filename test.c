@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 typedef struct {
 	int documento;
@@ -10,6 +11,8 @@ typedef struct {
 
 int main() {
 	persona persona2;
+
+	double (*vFun[])(double) = {sin, cos};
 	
 }
 
