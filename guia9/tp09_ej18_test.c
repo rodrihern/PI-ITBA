@@ -34,3 +34,19 @@ int main(void) {
     printf ("OK!\n");
     return 0;
 }
+
+// 1, 2, 3, 6
+
+int sumMatch(const int v[]) {
+    if(*v < 0) {
+        return 0;
+    }
+
+    int result = sumMatch(v+1);
+
+    if(result) {
+        return result - *v;
+    }
+    return *v;
+
+}

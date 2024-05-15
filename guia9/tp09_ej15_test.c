@@ -36,3 +36,12 @@ int main(void) {
   printf ("OK!\n");
   return 0;
 }
+
+void piramide(int *latas, int *h) {
+	if(*latas < (*h+1)*(*h+1)) {
+		return;
+	}
+	*latas -= (*h+1)*(*h+1);
+	*h += 1;
+	piramide(latas, h);
+}

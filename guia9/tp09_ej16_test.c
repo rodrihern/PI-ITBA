@@ -35,3 +35,25 @@ int main(void) {
   printf ("OK!\n");
   return 0;
 }
+
+int orden(const int v[]) {
+	if(*v == -1 || v[1] == -1) {
+		return 0;
+	}
+	if(v[2] == -1) {
+		if(v[0] < v[1])
+			return 1;
+		if(v[0] > v[1])
+			return -1;
+		
+		return 0;
+	}
+	
+	if(v[0] < v[1]) {
+		return orden(v+1) == 1;
+	}
+	if(v[0] > v[1]) {
+		return (orden(v+1) == -1) ? -1 : 0;
+	}
+	return 0;
+}

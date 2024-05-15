@@ -2,8 +2,10 @@
 #include <assert.h>
 
 #define MAX 10
+#define DIRECTIONS 4
 
 void reemplazo(int matriz[][MAX], int dim, int fil, int col);
+void negMove(int matriz[][MAX], int dim, int fil, int col, int dir[]);
 
 int main(void) {
 
@@ -29,4 +31,24 @@ int main(void) {
 
   printf ("OK!\n");
   return 0;
+}
+
+void reemplazo(int matriz[][MAX], int dim, int fil, int col) {
+	int dir[DIRECTIONS][2] = {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+
+	matriz[fil][col] = !matriz[fil][col];
+
+	for(int i = 0; i < DIRECTIONS; i++) {
+		negMove(matriz, dim, fil, col, dir[i]);
+	}
+}
+
+void negMove(int matriz[][MAX], int dim, int fil, int col, int inc[]) {
+	if(fil < 0 || dim <= fil || col < 0 || dim <= col ) {
+		return;
+	}
+
+	matriz[fil][col] = !matriz[fil][col];
+	
+	negMove(matriz, dim, fil+inc[0], col+inc[1], inc);
 }

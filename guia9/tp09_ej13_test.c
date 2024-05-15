@@ -14,3 +14,17 @@ main(void) {
 
 	puts("OK!");
 }
+
+char * strrchrRec(const char * s, char c) {
+	if(! *s) {
+		return NULL;
+	}
+
+	char * newIdx = strrchrRec(s+1, c);
+
+	if(!newIdx && *s == c) {
+		return s;
+	}
+	
+	return newIdx;
+}
