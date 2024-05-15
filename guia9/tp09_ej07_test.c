@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
+int busquedaBinaria(int v[], int dim, int num);
 
 int main(void) {
 
@@ -25,4 +26,25 @@ int main(void) {
 
   printf ("OK!\n");
   return 0;
+}
+
+int busquedaBinaria(int v[], int dim, int num) {
+	if(dim == 0) {
+		return 0;
+	}
+
+	int i = dim/2;
+
+	if(v[i] == num) {
+		return 1;
+	}
+	
+	if(v[i] < num) {
+		return busquedaBinaria(v+i + dim%2, i, num);
+	}
+	else {
+		return busquedaBinaria(v, i, num);
+	}
+
+	
 }

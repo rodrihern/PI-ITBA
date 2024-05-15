@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 #define LETTERS ('Z'-'A'+1)
 
 int palindromo(const char * s);
+int palindromoRec(const char * s, int dim);
+
 
 int main(void) {
 
@@ -26,4 +29,16 @@ int main(void) {
 
   puts("OK!");
   return 0;
+}
+
+int palindromo(const char * s) {
+	return palindromoRec(s, strlen(s));
+}
+
+int palindromoRec(const char * s, int dim) {
+	if(dim <= 1) {
+		return 1;
+	}
+
+	return (s[0] == s[dim-1]) && palindromoRec(s+1, dim-2);
 }
