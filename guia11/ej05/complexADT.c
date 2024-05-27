@@ -9,6 +9,8 @@ typedef struct complexCDT {
     double imag;
 } complexCDT;
 
+
+
 complexADT nuevoComp(double real, double imag) {
     complexADT num = malloc(sizeof(complexCDT));
     num->real = real;
@@ -16,6 +18,7 @@ complexADT nuevoComp(double real, double imag) {
 
     return num;
 }
+
 
 
 complexADT sumaComp(complexADT comp1, complexADT comp2 ) {
@@ -30,6 +33,7 @@ complexADT sumaComp(complexADT comp1, complexADT comp2 ) {
 }
 
 
+
 complexADT restaComp(complexADT comp1, complexADT comp2 ) {
     if(comp1 == NULL || comp2 == NULL) {
         exit(1);
@@ -40,6 +44,8 @@ complexADT restaComp(complexADT comp1, complexADT comp2 ) {
 
     return ans;
 }
+
+
 
 complexADT multiplicaComp(complexADT comp1, complexADT comp2 ) {
     if(comp1 == NULL || comp2 == NULL) {
@@ -52,23 +58,28 @@ complexADT multiplicaComp(complexADT comp1, complexADT comp2 ) {
     return ans;
 }
 
+
+
 complexADT divideComp(complexADT num1, complexADT num2) {
     if (num1 == NULL || num2 == NULL) {
         fprintf(stderr, "error división 1");
         exit(1);
     }
-    double norma = (num2->real * num2->real) + (num2->imag * num2->imag);
+    
+    double norma = num2->real * num2->real + num2->imag * num2->imag;
     if (norma < EPS) {
         fprintf(stderr, "error división 2");
         exit(1);
     }
-    complexADT ans = multiplicaComp(num1, conjugadoComp(num2));
 
+    complexADT ans = multiplicaComp(num1, conjugadoComp(num2));
     ans->real = ans->real / norma;
     ans->imag = ans->imag / norma;
 
     return ans;
 }
+
+
 
 complexADT conjugadoComp(complexADT num) {
     if(num == NULL) {
@@ -84,12 +95,14 @@ complexADT conjugadoComp(complexADT num) {
 }
 
 
+
 double parteRealComp(complexADT num) {
     if(num == NULL) {
         exit(1);
     }
     return num->real;
 }
+
 
 
 double parteImagComp(complexADT num) {
