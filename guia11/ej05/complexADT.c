@@ -62,12 +62,13 @@ complexADT divideComp(complexADT num1, complexADT num2) {
         fprintf(stderr, "error división 2");
         exit(1);
     }
-    complexADT ans = multiplicaComp(num1, num2);
+    complexADT ans = multiplicaComp(num1, conjugadoComp(num2));
+
     ans->real = ans->real / norma;
     ans->imag = ans->imag / norma;
+
     return ans;
 }
-
 
 complexADT conjugadoComp(complexADT num) {
     if(num == NULL) {
