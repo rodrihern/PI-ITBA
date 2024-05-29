@@ -100,28 +100,29 @@ int insertList(listADT list, elemType elem) {
     return flag;
 }
 
-static List deleteListRec(List list, elemType elem, compare cmp, int * flag) {
+static List deleteListRec(List list, elemType elem, compare cmp, int *flag) {
     int c;
-    if(list == NULL || (c = cmp(list->head, elem) > 0)) {
+    if (list == NULL ||(c=cmp(list->head, elem)) > 0) {
         return list;
     }
-    if(c < 0) {
-        list->tail = deleteListRec(list->tail, elem, cmp, flag);
-        return list;
+    if ((c=cmp(list->head, elem)) == 0) {
+        List aux = list->tail;
+        free(list);
+        *flag=1;
+        return aux;
     }
-    // aca tengo que borrar
-    List aux = list->tail;
-    free(list);
-    *flag = 1;
-    return aux;
+    
+    list->tail = deleteListRec(list->tail, elem, cmp, flag);
+    return list;
 }
 
 int deleteList(listADT list, elemType elem) {
-    int flag = 0;
+    int flag = 0; 
     list->first = deleteListRec(list->first, elem, list->cmp, &flag);
     list->size -= flag;
     return flag;
 }
+
 
 static elemType elemAtIndexRec(List list, int idx) {
     if(idx == 0) {
@@ -140,15 +141,14 @@ elemType elementAtIndex(listADT list, int idx) {
 
 void toBegin(listADT list) {
     list->current = list->first;
-    return;
 }
 
-int validateNext(listADT list) {
+int hasNext(listADT list) {
     return list->current != NULL;
 }
 
 elemType next(listADT list) {
-    if (!validateNext(list)) {
+    if (!hasNext(list)) {
         exit(1);
     }
     elemType aux = list->current->head;
@@ -158,4 +158,14 @@ elemType next(listADT list) {
 
 int sizeList(const listADT list) {
     return list->size;
+}
+
+
+void map(listADT list, fun fn) {
+    List aux = list->first;
+
+    while(aux) {
+        aux->head = fn(aux->head);
+        aux = aux->tail;
+    }
 }

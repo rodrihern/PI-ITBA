@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include "listADT.h"
 #include <strings.h>
+#include <string.h>
 #include <assert.h>
 
 // Si mi lista fuera de enteros ordenados en forma descendente
 int cmpInts(int n1, int n2) {
-    return n2 - n1;
+    return n1 - n2;
+}
+
+int square(int num) {
+    return num * num;
 }
 
 int main(void) {
@@ -19,20 +24,34 @@ int main(void) {
 
     //assert(deleteList(myList, "no estoy")==0);
 
-    insertList(myList, "aparezco solo una vez");
+    insertList(myList, "zz aparezco solo una vez");
+    insertList(myList, "choto");
 
     toBegin(myList);
-    while(validateNext(myList)) {
+    while(hasNext(myList)) {
         puts(next(myList));
     }
-
     putchar('\n');
-    deleteList(myList, "aparezco solo una vez");
-    insertList(myList, "zzz");
-    
-    for(int i = 0; i < sizeList(myList); i++) {
-        puts(elementAtIndex(myList, i));
+
+    /*
+    PARA ENTEROS
+
+    listADT myList = newList(cmpInts);
+
+    insertList(myList, 4);
+    insertList(myList, 4);
+    insertList(myList, 3);
+    insertList(myList, 10);
+    */
+
+    deleteList(myList, "hola");
+
+    toBegin(myList);
+    while(hasNext(myList)) {
+        puts(next(myList));
     }
+    putchar('\n');
+
 
     freeList(myList);
     putchar('\n');

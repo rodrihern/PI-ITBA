@@ -12,6 +12,8 @@ typedef char * elemType;
 //     positivo si e1 es "mayor" que e2 (e1 debe estar después que e2)
 typedef int (*compare) (elemType e1, elemType e2);
 
+typedef elemType (*fun) (elemType);
+
 listADT newList(compare cmp);
 
 //listADT newList(int (*cmp) (elemType, elemType));
@@ -38,8 +40,10 @@ elemType elementAtIndex(listADT list, int idx);
 
 void toBegin(listADT list);
 
-int validateNext(listADT list);
+int hasNext(listADT list);
 
 elemType next(listADT list);
+
+void map(listADT list, fun fn);
 
 #endif //UNTITLED6_LISTADT_H

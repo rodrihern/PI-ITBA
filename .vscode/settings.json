@@ -6,6 +6,9 @@
         "stdio.h": "c",
         "rand.h": "c",
         "stdlib.h": "c",
-        "complexadt.h": "c"
+        "complexadt.h": "c",
+        "strings.h": "c",
+        "assert.h": "c",
+        "string.h": "c"
     }
 }
