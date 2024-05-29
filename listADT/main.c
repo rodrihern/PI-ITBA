@@ -19,7 +19,23 @@ int main(void) {
 
     //assert(deleteList(myList, "no estoy")==0);
 
+    insertList(myList, "aparezco solo una vez");
+
+    toBegin(myList);
+    while(validateNext(myList)) {
+        puts(next(myList));
+    }
+
+    putchar('\n');
+    deleteList(myList, "aparezco solo una vez");
+    insertList(myList, "zzz");
+    
+    for(int i = 0; i < sizeList(myList); i++) {
+        puts(elementAtIndex(myList, i));
+    }
+
     freeList(myList);
+    putchar('\n');
 
     puts("OK");
     return 0;

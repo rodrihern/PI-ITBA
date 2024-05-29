@@ -14,6 +14,7 @@ typedef struct node * List;
 
 struct listCDT {
     List first;
+    List current;
     size_t size;
     compare cmp;
 };
@@ -99,8 +100,60 @@ int insertList(listADT list, elemType elem) {
     return flag;
 }
 
+static List deleteListRec(List list, elemType elem, compare cmp, int * flag) {
+    int c;
+    if(list == NULL || (c = cmp(list->head, elem) > 0)) {
+        return list;
+    }
+    if(c < 0) {
+        list->tail = deleteListRec(list->tail, elem, cmp, flag);
+        return list;
+    }
+    // aca tengo que borrar
+    List aux = list->tail;
+    free(list);
+    *flag = 1;
+    return aux;
+}
+
 int deleteList(listADT list, elemType elem) {
-    return 0;
+    int flag = 0;
+    list->first = deleteListRec(list->first, elem, list->cmp, &flag);
+    list->size -= flag;
+    return flag;
+}
+
+static elemType elemAtIndexRec(List list, int idx) {
+    if(idx == 0) {
+        return list->head;
+    }
+    return elemAtIndexRec(list->tail, idx-1);
+}
+
+elemType elementAtIndex(listADT list, int idx) {
+    if(idx >= list->size) {
+        exit(1);
+    }
+    return elemAtIndexRec(list->first, idx);
+    
+}
+
+void toBegin(listADT list) {
+    list->current = list->first;
+    return;
+}
+
+int validateNext(listADT list) {
+    return list->current != NULL;
+}
+
+elemType next(listADT list) {
+    if (!validateNext(list)) {
+        exit(1);
+    }
+    elemType aux = list->current->head;
+    list->current = list->current->tail;
+    return aux;
 }
 
 int sizeList(const listADT list) {

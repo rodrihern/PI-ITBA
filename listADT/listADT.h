@@ -34,4 +34,12 @@ int deleteList(listADT list, elemType elem);
 
 int sizeList(const listADT list);
 
+elemType elementAtIndex(listADT list, int idx);
+
+void toBegin(listADT list);
+
+int validateNext(listADT list);
+
+elemType next(listADT list);
+
 #endif //UNTITLED6_LISTADT_H
