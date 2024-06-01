@@ -15,7 +15,6 @@ complexADT nuevoComp(double real, double imag) {
     complexADT num = malloc(sizeof(complexCDT));
     num->real = real;
     num->imag = imag;
-
     return num;
 }
 
@@ -28,7 +27,6 @@ complexADT sumaComp(complexADT comp1, complexADT comp2 ) {
     complexADT ans = malloc(sizeof(complexCDT));
     ans->real = comp1->real + comp2->real;
     ans->imag = comp1->imag + comp2->imag;
-
     return ans;
 }
 
