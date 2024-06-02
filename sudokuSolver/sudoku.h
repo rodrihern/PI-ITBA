@@ -2,10 +2,14 @@
 #define _SUDOKU_H
 
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef int tSudoku[9][9];
 
 /*   * BACKEND *   */
+
+// copia en dest el sudoku source
+void cpySudoku(tSudoku dest, tSudoku source);
 
 // devuelve 1 si la solucion es valida, 0 si no
 int checkSolution(tSudoku sud);

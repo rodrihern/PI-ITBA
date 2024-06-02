@@ -4,11 +4,73 @@
 #define SWAP(x, y) aux = x; x = y; y = aux;
 #define VALID(x) (1 <= (x) && (x) <= 9)
 
-int checkSolution(tSudoku sud) {
-    return 0;
+void cpySudoku(tSudoku dest, tSudoku source) {
+    for(int i = 0; i < LIMIT; i++) {
+        for(int j = 0; j < LIMIT; j++) {
+            dest[i][j] = source[i][j];
+        }
+    }
 }
 
-int checkSource(tSudoku sud, int missing[]);
+int checkSolution(tSudoku sud) {
+    int dir[2][2] = {
+        {1, 0}, // hacia abajo
+        {0, 1}, // hacia la derecha
+    };
+    int ok = 1;
+    for(int i = 0; i < LIMIT && ok; i++) {
+        ok = checkDir(sud, i, 0, dir[1], 0);
+    }
+    for(int j = 0; j < LIMIT && ok; j++) {
+        ok = checkDir(sud, 0, j, dir[0], 0);
+    }
+    for(int i = 0; i < LIMIT; i += 3) {
+        for(int j = 0; j < LIMIT && ok; j += 3) {
+            ok = check3x3(sud, i, j, 0);
+        }
+    }
+
+    return ok;
+}
+
+int checkSource(tSudoku sud, int missing[]) {
+    
+    int ok = 1;
+    missing[0] = 0;
+    for(int i = 1; i <= LIMIT; i++) {
+        missing[i] = LIMIT;
+    }
+    
+    // la primera vez que ciclo lleno el missing y valido a mano para evitar ciclar una vez de mas
+    for(int i = 0; i < LIMIT && ok; i++) {
+        char repeated[LIMIT] = {0};
+        for(int j = 0; j < LIMIT && ok; j++) {
+            if(VALID(sud[i][j]) && !repeated[sud[i][j]-1]) {
+                missing[sud[i][j]]--;
+                repeated[sud[i][j]-1] = 1;
+            }
+            else if(sud[i][j] == 0) {
+                missing[0]++;
+            }
+            else {
+                ok = 0;
+            }
+        }
+    }
+
+    //valido las columnas y el 3x3
+    int dir[] = {1, 0};
+    for(int j = 0; j < LIMIT && ok; j++) {
+        ok = checkDir(sud, 0, j, dir, 1);
+    }
+    for(int i = 0; i < LIMIT; i += 3) {
+        for(int j = 0; j < LIMIT && ok; j += 3) {
+            ok = check3x3(sud, i, j, 1);
+        }
+    }
+    
+    return ok;
+}
 
 int checkDir(tSudoku sud, int i, int j, int dir[], int emptySpacesAllowed) {
     int inc_i = dir[0], inc_j = dir[1], ok = 1;
@@ -80,6 +142,9 @@ static void solveSudokuRec(tSudoku source, tSudoku ans, int v[], int cidx, int d
         if(checkSolution(ans)) {
             *solved = 1;
         }
+        else {
+            cpySudoku(ans, source);
+        }
         return;
     }
 
@@ -91,7 +156,24 @@ static void solveSudokuRec(tSudoku source, tSudoku ans, int v[], int cidx, int d
 }
 
 int solveSudoku(tSudoku source, tSudoku ans) {
-    return 1;
+    int missing[10];
+    if(!checkSource(source, missing)) {
+        return 0;
+    }
+    int solved = 0;
+    int * vec = malloc(missing[0] * sizeof(vec[0]));
+    // ahora tengo que llenar el vec
+    int k = 0;
+    for(int i = 1; i <= LIMIT; i++) {
+        for(int j = 0; j < missing[i]; j++) {
+            vec[k++] = i;
+        }
+    }
+    cpySudoku(ans, source);
+    puts("\npensando...\n");
+    solveSudokuRec(source, ans, vec, 0, k, &solved);
+    
+    return solved;
 }
 
 
