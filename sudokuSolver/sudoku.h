@@ -43,6 +43,7 @@ int solveSudoku(tSudoku source, tSudoku ans);
 void printSudoku(tSudoku sud);
 
 // recibe por entrada estandar el sudoku y lo deja en sud
+// lee exactamente 81 digitos ignorando cualquier caracter que no sea un digito
 void getSudoku(tSudoku * sud);
 
 #endif

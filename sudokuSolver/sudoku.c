@@ -177,6 +177,7 @@ int solveSudoku(tSudoku source, tSudoku ans) {
     cpySudoku(ans, source);
     puts("\nwait for it...\n");
     solveSudokuRec(source, ans, vec, 0, k, &solved);
+    free(vec);
     
     return solved;
 }
@@ -211,4 +212,13 @@ void printSudoku(tSudoku sud) {
 }
 
 // recibe por entrada estandar el sudoku y lo deja en sud
-void getSudoku(tSudoku * sud);
+void getSudoku(tSudoku * sud) {
+    char c;
+    for(int i = 0; i < LIMIT; i++) {
+        for(int j = 0; j < LIMIT; j++) {
+            while((c=getchar()) < '0' || '9' < c)
+                ;
+            *sud[i][j] = c - '0';
+        }
+    }
+}
