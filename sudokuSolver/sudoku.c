@@ -147,11 +147,16 @@ static void solveSudokuRec(tSudoku source, tSudoku ans, int v[], int cidx, int d
         }
         return;
     }
-
+    char alreadyFixed[LIMIT] = {0};
     for(int i = cidx; i < dim && !(*solved); i++) {
-        SWAP(v[i], v[cidx]);
-        solveSudokuRec(source, ans, v, cidx+1, dim, solved);
-        SWAP(v[i], v[cidx]);
+        if(!alreadyFixed[v[i]-1]) {
+            SWAP(v[i], v[cidx]);
+            solveSudokuRec(source, ans, v, cidx+1, dim, solved);
+            SWAP(v[i], v[cidx]);
+            alreadyFixed[v[i]-1] = 1;
+
+        }
+        
     }
 }
 
