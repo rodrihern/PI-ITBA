@@ -170,7 +170,7 @@ int solveSudoku(tSudoku source, tSudoku ans) {
         }
     }
     cpySudoku(ans, source);
-    puts("\npensando...\n");
+    puts("\nwait for it...\n");
     solveSudokuRec(source, ans, vec, 0, k, &solved);
     
     return solved;
@@ -182,16 +182,27 @@ int solveSudoku(tSudoku source, tSudoku ans) {
 // imprime en salida estandar el sudoku
 void printSudoku(tSudoku sud) {
     for(int i = 0; i < LIMIT; i++) {
+        if(i % 3 == 0) {
+            puts(" -----------------------");
+        }
         for(int j = 0; j < LIMIT; j++) {
+            if(j % 3 == 0) {
+                printf("| ");
+            }
             if(sud[i][j]) {
                 printf("%d ", sud[i][j]);
             }
             else {
-                printf(". ");
+                printf("  ");
             }
         }
-        putchar('\n');
+        puts("|");
+
     }
+    puts(" -----------------------");
+
+
+
 }
 
 // recibe por entrada estandar el sudoku y lo deja en sud

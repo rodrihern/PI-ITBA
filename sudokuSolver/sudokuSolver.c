@@ -75,14 +75,14 @@ int main(void) {
     
     puts("sudoku a resolver:");
     printSudoku(sudoku2);
-    solveSudoku(sudoku2, sudoku1);
-    puts("resuelto: ");
-    printSudoku(sudoku1);
-    
-
-    
-   
-    puts("\nOK !");
+    if(solveSudoku(sudoku2, sudoku1)) {
+        puts("resuelto: ");
+        printSudoku(sudoku1);
+        puts("\nLEGENDARY !");
+    }
+    else {
+        puts("\nNo hay solucion :(");
+    }
 
   return 0;
 }
