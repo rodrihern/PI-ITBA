@@ -18,10 +18,6 @@ typedef struct socialCDT {
 } socialCDT;
 
 
-socialADT newSocial() {
-    return calloc(1, sizeof(socialCDT));
-}
-
 
 static char * copyStr(const char * s) {
     return strcpy(malloc(strlen(s)+1), s);
@@ -39,6 +35,13 @@ static person * findPerson(const socialADT soc, const char * namePerson) {
 
     return per;
 }
+
+
+
+socialADT newSocial() {
+    return calloc(1, sizeof(socialCDT));
+}
+
 
 
 static void freeRelated(friend * list) {
@@ -103,8 +106,6 @@ static friend * insertFriend(friend * list, const char * name) {
     return list;
 }
 
-
-
 void addRelated(socialADT soc, const char * name, const char * related) {
     person * per = findPerson(soc, name);
 
@@ -116,6 +117,7 @@ void addRelated(socialADT soc, const char * name, const char * related) {
 
 
 }
+
 
 
 char ** related(const socialADT soc, const char * namePerson) {
@@ -140,11 +142,7 @@ char ** related(const socialADT soc, const char * namePerson) {
 }
 
 
-/* Retorna una copia de los nombres de las personas en orden alfabético.
-** Para marcar el final, después del último nombre se coloca NULL
-** Si no hay personas, retorna un vector que sólo tiene a NULL como
-** elemento
-*/
+
 char ** persons(const socialADT soc) {    
 
     char ** names = malloc((soc->dimPeople + 1) * sizeof(char *));
