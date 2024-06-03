@@ -69,14 +69,15 @@ void freeSocial(socialADT soc) {
 
 
 static person * insertPerson(person * list, const char * name, int * added) {
-    if(list == NULL || strcmp(list->name, name) > 0) {
-        (*added)++;
+    int c;
+    if(list == NULL || (c = strcmp(list->name, name)) > 0) {
+        *added = 1;
         person * new = calloc(1, sizeof(person));
         strncpy(new->name, name, MAX_LEN-1);
         new->tail = list;
         return new;
     }
-    if(strcmp(list->name, name) < 0) {
+    if(c < 0) {
         list->tail = insertPerson(list->tail, name, added);
     }
     
@@ -85,12 +86,8 @@ static person * insertPerson(person * list, const char * name, int * added) {
 
 void addPerson(socialADT soc, const char * name) {
     int added = 0;
-
     soc->people = insertPerson(soc->people, name, &added);
-    if(added) {
-        soc->dimPeople++;
-    }
-
+    soc->dimPeople += added;
 }
 
 
@@ -102,6 +99,7 @@ static friend * insertFriend(friend * list, const char * name) {
         new->tail = list;
         return new;
     }
+    
     list->tail = insertFriend(list->tail, name);
     return list;
 }
@@ -113,9 +111,6 @@ void addRelated(socialADT soc, const char * name, const char * related) {
         per->realated = insertFriend(per->realated, related);
         per->dimRelated++;
     }
-
-
-
 }
 
 
