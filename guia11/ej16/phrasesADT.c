@@ -9,12 +9,8 @@ typedef struct phrasesCDT {
     size_t size;
 } phrasesCDT;
 
-/*
-* Recibe cuál será el rango de claves válidas a utilizar, por ejemplo si
-* keyFrom=1001, keyTo=1500 habrá un máximo de 500 frases a almacenar
-* keyFrom=1001, keyTo=3500 habrá un máximo de 2500 frases a almacenar
-* Si los parámetros son inválidos retorna NULL
-*/
+
+
 phrasesADT newPhrasesADT(size_t keyFrom, size_t keyTo) {
     if(keyFrom > keyTo) {
         return NULL;
