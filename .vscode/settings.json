@@ -13,5 +13,6 @@
         "sudoku.h": "c",
         "system_error": "c",
         "squirrelcensusadt.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }
