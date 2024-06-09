@@ -1,5 +1,6 @@
 #include "moveToFrontADT.h"
 
+
 typedef struct node {
     elemType elem;
     struct node * tail;

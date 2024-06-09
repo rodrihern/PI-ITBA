@@ -4,6 +4,12 @@
 
 #define BLOCK 20
 
+typedef struct CDT * ADT;
+
+typedef struct CDT {
+
+} CDT;
+
 typedef int elemType;
 
 typedef int (*compare) (elemType, elemType);
@@ -57,7 +63,7 @@ tList findInList(tList list, elemType elem, compare cmp) {
 }
 
 // inserta ordenado
-static tList insertRec(tList list, elemType elem, compare cmp, int *added) {
+tList insertRec(tList list, elemType elem, compare cmp, int *added) {
     int c;
     if ( list==NULL || (c = cmp(list->elem, elem)) > 0 ) {
         // inserto
@@ -95,3 +101,14 @@ static tList deleteListRec(tList list, elemType elem, compare cmp, int *deleted)
 }
 
 
+/*
+    * RECURSIVIDAD DE PILA: 
+
+        PRIMERO HAGO EL LLAMADO RECURSIVO Y USO LO QUE ME RETORNA
+        LIFO
+
+    * RECURSIVIDAD DE COLA:
+
+        HAGO LO QUE TENGO QUE HACER Y VUELVO A LLAMAR (N! = N * (N-1)!)
+        FIFO
+*/
