@@ -12,7 +12,8 @@
         "string.h": "c",
         "sudoku.h": "c",
         "system_error": "c",
-        "squirrelcensusadt.h": "c"
+        "squirrelcensusadt.h": "c",
+        "caladt.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }
