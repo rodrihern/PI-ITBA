@@ -1,4 +1,5 @@
 #include "bibleADT.h"
+#include <string.h>
 
 #define BOOK_COUNT 76
 #define BLOCK 20
@@ -21,13 +22,14 @@ typedef struct bibleCDT {
 bibleADT newBible() {
     return calloc(1, sizeof(bibleCDT));
 }
+
 /*
 ** Agrega un versículo a la Biblia. Si ya estaba ese número de versículo en ese
 ** número de libro, no lo agrega ni modifica y retorna 0. Si lo agregó retorna 1
 ** bookNbr: número de libro
 ** verseNbr: número de versículo
 */
-static char * cpyVerse(char * s, size_t * len) {
+static char * cpyVerse(const char * s, size_t * len) {
     if(s == NULL) {
         return NULL;
     }
@@ -71,13 +73,25 @@ int addVerse(bibleADT bible, size_t bookNbr, size_t verseNbr, const char * verse
 
 
 
+// devuelve la direccion de una copia en el heap de el string s
+static char * cpyStr(char * s, size_t len) {
+    if(s == NULL) {
+        return NULL;
+    }
+    return strcpy(malloc(len + 1), s);
+}
+
 /*
 ** Retorna una copia de un versículo o NULL si no existe.
 ** bookNbr: número de libro
 ** verseNbr: número de versículo
 */
 char * getVerse(bibleADT b, size_t bookNbr, size_t verseNbr) {
-
+    if(bookNbr == 0 || bookNbr > BOOK_COUNT || verseNbr == 0 || b->books[bookNbr-1].verseCount < verseNbr) {
+        return NULL;
+    }
+    char * ans = cpyStr(b->books[bookNbr-1].verses[verseNbr-1].text, b->books[bookNbr-1].verses[verseNbr-1].verlen);
+    return ans;
 }
 /* Libera todos los recursos reservados por el TAD */
 void freeBible(bibleADT b) {
