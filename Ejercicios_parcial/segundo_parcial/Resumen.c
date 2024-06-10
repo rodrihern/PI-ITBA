@@ -43,7 +43,7 @@ static char * cpyStrBlock(const char * s, size_t * len) {
         }
         dest[i++] = *s++;
     }
-    dest = realloc(dest, i * sizeof(char));
+    dest = realloc(dest, (i+1) * sizeof(char));
     dest[i] = 0;
     *len = i;
     return dest;
