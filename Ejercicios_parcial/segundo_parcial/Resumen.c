@@ -22,7 +22,7 @@ typedef struct node {
 typedef node * tList;
 
 
-// crea una copia del string en el heap y devuelve la direccion
+// crea una copia del string en el heap y devuelve la direccion en la que copio
 char * cpyStr(char * s) {
     if(s == NULL) {
         return NULL;
