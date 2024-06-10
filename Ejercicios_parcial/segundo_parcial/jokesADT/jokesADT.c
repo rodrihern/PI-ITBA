@@ -156,10 +156,12 @@ void deleteCategory(jokesADT j, const char * category) {
     }
     categoryList current = j->firstCat;
     categoryList prev = NULL;
-    int c;
-    while(current && (c = strcmp(current->categoryName, category)) <= 0) {
+    int c, found = 0;
+
+    while(current && !found && (c = strcmp(current->categoryName, category)) <= 0) {
         if(c == 0) {
             // encontre asi que borro
+            found = 1;
             if(prev) {
                 prev->tail = current->tail;
             }
@@ -169,9 +171,12 @@ void deleteCategory(jokesADT j, const char * category) {
             free(current->categoryName);
             freeJokeVec(current->jokes, current->jokeCount);
             j->categoryCount--;
+            free(current);
         }
-        prev = current;
-        current = current->tail;
+        if(!found) {
+            prev = current;
+            current = current->tail;
+        }
     }
 
 }
