@@ -39,6 +39,13 @@ int main(void) {
         free(silly);
     }
 
+    /*
+    deleteCategory(jokes, "tontos");
+    silly = joke(jokes, "tontos");
+    assert(silly==NULL);
+    assert(categoriesCount(jokes)==1);
+    */
+
     freeJokes(jokes);
     puts("OK!");
     return 0;

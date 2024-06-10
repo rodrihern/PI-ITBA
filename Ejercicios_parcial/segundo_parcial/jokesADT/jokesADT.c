@@ -87,7 +87,7 @@ static char * cpyStrBlock(const char * s, size_t * len) {
         }
         dest[i++] = *s++;
     }
-    dest = realloc(dest, i);
+    dest = realloc(dest, i+1);
     dest[i] = 0;
     *len = i;
     return dest;
@@ -123,10 +123,58 @@ char * joke(jokesADT j, const char * category) {
 }
 
 
+
+// libera la memoria del vector de chistes
+static void freeJokeVec(tJoke * jokes, size_t dim) {
+    for(int i = 0; i < dim; i++) {
+        free(jokes[i].joke);
+    }
+    free(jokes);
+}
+
+// libera la memoria reservada por todas las categorias
+static void freeCat(categoryList cat) {
+    if(cat == NULL) {
+        return;
+    }
+    freeCat(cat->tail);
+    freeJokeVec(cat->jokes, cat->jokeCount);
+    free(cat->categoryName);
+    free(cat);
+}
+
+void freeJokes(jokesADT j) {
+    freeCat(j->firstCat);
+    free(j);
+}
 /*
 * Elimina una categoría y todos los chistes de esa categoría
 */
-void deleteCategory(jokesADT j, const char * category);
+void deleteCategory(jokesADT j, const char * category) {
+    if(j->firstCat == NULL) {
+        return;
+    }
+    categoryList current = j->firstCat;
+    categoryList prev = NULL;
+    int c;
+    while(current && (c = strcmp(current->categoryName, category)) <= 0) {
+        if(c == 0) {
+            // encontre asi que borro
+            if(prev) {
+                prev->tail = current->tail;
+            }
+            else {
+                j->firstCat = current->tail;
+            }
+            free(current->categoryName);
+            freeJokeVec(current->jokes, current->jokeCount);
+            j->categoryCount--;
+        }
+        prev = current;
+        current = current->tail;
+    }
+
+}
 
 
 
@@ -149,25 +197,3 @@ char ** categories(const jokesADT j) {
     return ans;
 }
 
-// libera la memoria del vector de chistes
-static void freeJokeVec(tJoke * jokes, size_t dim) {
-    for(int i = 0; i < dim; i++) {
-        free(jokes[i].joke);
-    }
-    free(jokes);
-}
-
-// libera la memoria reservada por todas las categorias
-static void freeCat(categoryList cat) {
-    if(cat == NULL) {
-        return;
-    }
-    freeCat(cat->tail);
-    freeJokeVec(cat->jokes, cat->jokeCount);
-    free(cat);
-}
-
-void freeJokes(jokesADT j) {
-    freeCat(j->firstCat);
-    free(j);
-}
