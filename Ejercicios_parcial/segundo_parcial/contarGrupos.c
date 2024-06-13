@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct node {
     char head;
@@ -10,10 +11,13 @@ typedef node * tList;
 
 
 int contarGrupos(char *s, char c);
+tList fromArray(char v[], unsigned int dim );
+int countGroups(tList list, char c);
 
 int main() {
-
-    printf("%d\n", contarGrupos("34abcaa33 30 0", 'x'));
+    char * s = "abbbccaadaaaa";
+    tList listarda = fromArray(s, strlen(s));
+    printf("%d\n", countGroups(listarda, 'a'));
 
 
     return 0;
@@ -40,4 +44,16 @@ int countGroups(tList list, char c) {
     }
     
     return (list->head == c && list->tail->head != c) + countGroups(list->tail, c);
+}
+
+
+tList fromArray(char v[], unsigned int dim ) {
+    tList ans = NULL;
+    while (dim) {
+        tList aux = malloc(sizeof(node));
+        aux->head = v[--dim];
+        aux->tail = ans;
+        ans = aux;
+    }
+    return ans;
 }
