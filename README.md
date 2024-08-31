@@ -10,11 +10,11 @@ Es muy importante que traten de hacer los ejercicios por su cuenta, que los inte
 
 A su vez, asi como es demandante, es una materia muy divertida y espero que la disfruten tanto como yo :)
 
-si quieren comparar con mis soluciones sepan que no tienen por que estar perfectas ni ser la unica manera de resolver el ejercicio. Su solucion puede ser igual o mejor que la mia y si tienen dudas sobre como lo resolvieron, mandeles el codigo a los profes que en general son muy copados y responden todo.
-
 > A veces, las cosas más difíciles que enfrentamos nos llevan a los logros más grandes.
 >
 >-- *La mona Gimenez*
+
+Si quieren comparar con mis soluciones sepan que no tienen por que estar perfectas ni ser la unica manera de resolver el ejercicio. Su solucion puede ser igual o mejor que la mia. Si tienen dudas sobre como lo resolvieron, mandeles el codigo a los profes que en general son muy copados y responden todo.
 
 ## Alias para compilar
 
