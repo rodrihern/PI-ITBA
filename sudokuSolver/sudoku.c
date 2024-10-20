@@ -167,7 +167,6 @@ static int isValidBoard(tSudoku board) {
 
 int solveSudoku(tSudoku sud) {
     
-    
     if(!isValidBoard(sud)) {
         printf("invalid board");
         return 0;
