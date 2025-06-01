@@ -52,7 +52,7 @@ static void freeIter(List l) {
     }
 }
 
-void freeDict(dictADT d) {
+void freeDict(dictADT d) { 
     // NO hace falta if ( d==NULL)
     for(int i=0; i<LETTERS; i++) {
         freeRec(d->words[i].first);
