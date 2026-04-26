@@ -1,6 +1,11 @@
 # Programacion Imperativa
 
-En este ropositorio van a encontrar todos los codigos que fui haciendo durante la cursada.
+En este repositorio se encuentran las notas, ejercicios y soluciones desarrolladas durante la cursada de PI.
+
+## Contenido
+- **Ejercicios:** Código de las guías y talleres.
+- **Notas:** Apuntes y material teórico de referencia.
+- **Exámenes:** Práctica con parciales viejos y ejercicios de examen.
 
 ## Recomendaciones
 
@@ -40,3 +45,10 @@ Entonces para compilar con todas las flags solo hay que poner
 mygcc myFile.c
 ```
 
+## Materias que continúan PI
+
+PI es la base de varias materias del plan. Algunas continuaciones directas en este vault:
+
+- [[poo/README|POO]] — Programación Orientada a Objetos (Java, UML, Ruby)
+- [[so/clase/README|SO]] — Sistemas Operativos (procesos, memoria, filesystem en C)
+- [[arqui/clase/README|Arqui]] — Arquitectura de Computadoras (Assembly x86-64, C de bajo nivel)
